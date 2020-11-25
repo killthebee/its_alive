@@ -1,9 +1,14 @@
-"""
-app example
-
-"""
+import requests
+from requests.exceptions import ConnectionError, MissingSchema
 
 
 def is_alive_host(hostname):
     """Проверить, что запрашиваемый хост возвращает http status 100<=x<400."""
-    pass
+    try:
+        response = requests.get(hostname)
+        host_status = 'up' if response.status_code >= 100 and response.status_code < 400 else 'down'
+        return {'status': host_status}
+    except ConnectionError:
+        return {'status': 'A Connection error occurred.'}
+    except MissingSchema:
+        return is_alive_host(f'http://{hostname}')
