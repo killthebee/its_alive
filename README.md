@@ -1,26 +1,54 @@
-# python_intern
+# SEMrush тестовое
 ---
+Сервис, который показывает работает ли сайт.
 
-## requirements
+Введите в строке браузера
+https://whatisupandwhatisdown.herokuapp.com/healthz/?hostname=(hostname)
 
-- python 3.9
-- В изначальном коде менять можно *всё*, вплоть до структуры файлов. 
-- Использовать можно всё что угодно. 
-- Таски со звёздочкой можно пропускать (или делать часть из них)
-- Решение выложить через fork/копию/etc репозитория на github
+Где (hostname) это адресс интересующего сайта. Например:
+
+https://whatisupandwhatisdown.herokuapp.com/healthz/?hostname=https://www.youtube.com/
+
+Если всё ок, увидите ```{"status":"up"}```
 
 
-## TODO
+## Deploy
 
-- реализовать функцию [is_alive_host](./app.py)
+Из этой [REPO](https://github.com/killthebee/its_alive_deploy) коммиты, запушенные в мастер, автодеплоятся в Heroku благодаря GitHub Actions.
 
-- покрыть функцию [тестами](./tests.py)
+## Локальный запуск
+Python3 должен быть уже установлен.
 
-- развернуть вокруг функции веб сервис c помощью [fastapi](https://fastapi.tiangolo.com/)
+Переместитесь в папку app.
+Затем используйте pip (или pip3, есть конфликт с Python2) для установки зависимостей:
 ```
->> curl your_service.loc:8001/healthz?hostname=semrush.com
-{status: [up|down]}
+pip install -r requirements.txt
 ```
+В командной строке и введите
+```
+uvicorn app:app --reload
+```
+После чего откройте браузер и введи в строку
+http://127.0.0.1:8000/healthz/?hostname=(hostname)
 
-- задача со *звёздочкой*: завернуть приложение в docker
-- задача на *две звёздочки*: выкатить куда-либо с помощью github-actions/gitlab/jenkins/etc
+Где (hostname) это адресс интересующего сайта. Например:
+
+http://127.0.0.1:8000/healthz/?hostname=https://www.youtube.com/
+
+Если всё ок, увидите ```{"status":"up"}```
+
+## ТАЙМИНГИ и ПРОБЛЕМЫ
+
+Потратил несколько часов тыкая хостинги, Хероку оказался единственным кто готов работать сразу/Даёт создать(не блочит) акк/
+принимает мою карту(или хотя бы не просит)/поддерживает ASGI.
+
+Heroku кажется блочит часть запросов, из-за чего скрипт работает не всегда корректно. Например к яндексу и ютуб даёт кидать запросы
+а к СЕМраш нет. Думаю это пофикситься привязкой карты/оплатой.
+
+Из-за глупой ошибки долгое время не мог заставить акшон логиниться в хероку. ([REPO](https://github.com/killthebee/its_alive_deploy))
+
+В остальном butter smooth.
+
+
+## Цель кода
+Решение [тестового](https://github.com/esemi/python_intern) SEMrush
